@@ -1,0 +1,164 @@
+<!DOCTYPE html>  
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Dongeng Ulang Tahun</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      font-family: -apple-system, BlinkMacSystemFont, 'Arial', sans-serif;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    .book {
+      width: 90%;
+      max-width: 600px;
+      height: 80vh;
+      max-height: 400px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .page {
+      width: 100%;
+      height: 100%;
+      background: #fafafa;
+      border-radius: 5px;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333;
+      text-align: center;
+      animation: fadeIn 2s ease-in-out;
+      -webkit-overflow-scrolling: touch;
+    }
+    .page p {
+      margin: 10px 0;
+      display: none;
+    }
+    .typing {
+      display: block;
+      white-space: pre-wrap;
+      overflow: hidden;
+      border-right: 2px solid #333;
+      animation: blinkCursor 0.7s step-end infinite;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: rotateY(-10deg); }
+      to { opacity: 1; transform: rotateY(0); }
+    }
+    @keyframes blinkCursor {
+      50% { border-color: transparent; }
+    }
+    audio {
+      display: none;
+    }
+    .play-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="book">
+    <div class="page" id="page">
+      <p>🎵 Saengil chukha hamnida~ 🎵</p>
+      <p>Di sebuah kerajaan yang jauh 🏰, tersembunyi di balik awan lembut ☁️ dan cahaya bintang ✨,</p>
+      <p>lahirlah seorang bidadari tanpa sayap 👼 pada tanggal enam belas di bulan Agustus 📅.</p>
+      <p>Sejak hari itu, angin berbisik lebih lembut 🍃, bunga-bunga mekar lebih indah 🌸,</p>
+      <p>dan matahari ☀️ tersenyum lebih hangat.</p>
+      <p>Semua makhluk negeri dongeng tahu 🧚, bahwa sang bidadari membawa sihir kebahagiaan 💫 ke setiap hati yang ia temui ❤️.</p>
+      <p>Langkahnya bagaikan tarian cahaya di permukaan danau 💃🌊,</p>
+      <p>suaranya seperti lantunan lagu peri 🎶 yang menenangkan jiwa 💖.</p>
+      <p>Setiap tatapannya memancarkan keajaiban ✨, dan setiap senyumnya adalah doa yang menghidupkan harapan 🌟.</p>
+      <p>😂 Namun… itu adalah cerita dari sebuah dongeng karya “Disnepi” 🪄 versi KW super.</p>
+      <p>🏞️ Di dunia nyata ini, pada hari ini benar-benar lahir seorang manusia</p>
+      <p>yang membawa kebahagiaan 😄 dan kisah yang sangat menarik 📖 dalam hidupku.</p>
+      <p>Ia bukan hanya sekadar hadir 🌈, tapi menjadi alasan mengapa hari-hariku</p>
+      <p>penuh warna 🎨, tawa 😂, dan cerita tak terlupakan 🥰.</p>
+      <p>Senyumnya menular 😊, tawanya membuat dunia terasa lebih ringan 🌍,</p>
+      <p>dan tatapannya… ah 😌, tatapannya bisa menghapus semua lelah 🕊️.</p>
+      <p>🎂 Selamat ulang tahun, Nadia Luthfania Ayyaaangku tercintaaa 🥰🥰🥰🥰🥰🥰🥰🥰 👑,</p>
+      <p>Semoga setiap langkah ayyaang selalu dipenuhi kebahagiaan dan keberkahan. Semoga semua doa baik ayyaang Allah kabulkan satu per satu, dan setiap harapan yang belum terwujud akan diganti dengan sesuatu yang lebih indah. Aku berdoa ayyaang selalu sehat, panjang umur, rezeki lancar, dan hatinya selalu tenang. Terima kasih sudah hadir di hidupku dan jadi alasan senyumku setiap hari. Semoga kita bisa merayakan ulang tahun ini bersama, lagi dan lagi… sampai tua nanti</p>      
+      <p>dan maafkan aku 🙏, karena aku masih menjadi manusia yang penuh kekurangan 🤍</p>
+    </div>
+  </div>
+  <button class="play-button" onclick="playAudio()">Putar Musik</button>
+  <audio id="bgMusic">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <script>
+    const paragraphs = document.querySelectorAll('.page p');
+    const page = document.getElementById('page');
+    const audio = document.getElementById('bgMusic');
+    let currentPara = 0;
+    let currentChar = 0;
+    let isTyping = false;
+
+    function playAudio() {
+      audio.play().catch(error => {
+        console.log('Autoplay blocked:', error);
+      });
+    }
+
+    function typeParagraph() {
+      if (currentPara >= paragraphs.length) {
+        audio.pause();
+        return;
+      }
+
+      const para = paragraphs[currentPara];
+      const text = para.textContent;
+      para.textContent = '';
+      para.style.display = 'block';
+      para.classList.add('typing');
+      isTyping = true;
+
+      function typeChar() {
+        if (currentChar < text.length) {
+          para.textContent += text[currentChar];
+          currentChar++;
+          page.scrollTop = page.scrollHeight;
+          setTimeout(typeChar, 60);
+        } else {
+          para.classList.remove('typing');
+          isTyping = false;
+          currentChar = 0;
+          currentPara++;
+          setTimeout(typeParagraph, 1000);
+        }
+      }
+      typeChar();
+    }
+
+    window.onload = function() {
+      typeParagraph();
+    };
+  </script>
+</body>
+</html>
